@@ -1,114 +1,113 @@
 package com.admin_official.codeforcesstalker
 
+import com.admin_official.codeforcesstalker.data.Username
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.IllegalArgumentException
 
 interface ParseListener {
     fun authenticateCallback(boolean: Boolean)
-    fun userInfoCallback(handles: List<Handle>)
-    fun userStatusCallback(problems: List<Problem>)
+    fun userInfoCallback(problems: List<Handle>)
     fun contestsCallback(contests: List<Contest>)
     fun standingsCallback(handles: List<ContestHandle>)
 }
 
 private const val TAG = "De_JsonParse"
 
-object JsonParse {
-    fun parse(downloadType: DownloadType, json: String, listener: ParseListener, downloadStatus: DownloadStatus) {
-
-        if(downloadStatus == DownloadStatus.FAILED) {
-            if(downloadType == DownloadType.AUTHENTICATE) {
-                listener.authenticateCallback(false)
-            }
-            return
-        }
-
+class JsonParse(val listener: ParseListener) {
+    fun parseUserInfo(json: String) {
         val response = JSONObject(json)
 
-        when(downloadType) {
-            DownloadType.AUTHENTICATE -> {
-                listener.authenticateCallback(downloadStatus != DownloadStatus.FAILED)
+        val userJsonArray = response.getJSONArray("result")
+        var handles = mutableListOf<Handle>()
+        for(i in 0 until userJsonArray.length()) {
+            val userJsonObject = userJsonArray.getJSONObject(i)
+            val handle = Handle(
+                userJsonObject.getString("handle"),
+                userJsonObject.getString("firstName"),
+                userJsonObject.getString("lastName"),
+                userJsonObject.getInt("rating"),
+                userJsonObject.getInt("maxRating"),
+                userJsonObject.getString("rank"),
+                userJsonObject.getString("titlePhoto"),
+                userJsonObject.getString("maxRank")
+            )
+
+            Downloader().apply {
+                val problemsJson = download(DownloadType.USER_STATUS, listOf(Username(handle.username)), null)
+                if(status == DownloadStatus.OK) handle.problems = parseUserStatus(problemsJson)
             }
 
-            DownloadType.USERINFO -> {
-                val userJsonArray = response.getJSONArray("result")
-                var handles = mutableListOf<Handle>()
-                for(i in 0 until userJsonArray.length()) {
-                    val userJsonObject = userJsonArray.getJSONObject(i)
-                    val handle = Handle(
-                        userJsonObject.getString("firstName"),
-                        userJsonObject.getString("lastName"),
-                        userJsonObject.getInt("rating"),
-                        userJsonObject.getInt("maxRating"),
-                        userJsonObject.getString("rank"),
-                        userJsonObject.getString("titlePhoto"),
-                        userJsonObject.getString("maxRank")
-                    )
-
-                    handles.add(handle)
-                }
-                listener.userInfoCallback(handles)
-            }
-
-            DownloadType.USER_STATUS -> {
-                val problemsJsonArray = response.getJSONArray("result")
-                val problems = mutableListOf<Problem>()
-                for(i in 0 until problemsJsonArray.length()) {
-                    val jsonObject = problemsJsonArray.getJSONObject(i)
-                    val problemJsonObject = jsonObject.getJSONObject("problem")
-
-                    val problem = Problem(
-                        problemJsonObject.getInt("contestId"),
-                        problemJsonObject.getString("index"),
-                        problemJsonObject.getString("name"),
-                        getTags(problemJsonObject.getJSONArray("tags")),
-                        jsonObject.getString("verdict"),
-                        jsonObject.getString("programmingLanguage"),
-                        jsonObject.getLong("creationTimeSeconds"))
-
-                    problems.add(problem)
-                }
-
-                listener.userStatusCallback(problems)
-            }
-
-            DownloadType.CONTESTS -> {
-                val contestJsonArray = response.getJSONArray("result")
-                val contests = mutableListOf<Contest>()
-
-                for(i in 0 until contestJsonArray.length()) {
-                    val contestJsonObject = contestJsonArray.getJSONObject(i)
-                    val contest = Contest(
-                        contestJsonObject.getInt("id"),
-                        contestJsonObject.getString("name"),
-                        contestJsonObject.getLong("startTimeSeconds"),
-                        contestJsonObject.getInt("durationSeconds")/60)
-
-                    contests.add(contest)
-                }
-
-                listener.contestsCallback(contests)
-            }
-
-            DownloadType.STANDINGS -> {
-                val statusJsonArray = response.getJSONObject("result").getJSONArray("rows")
-                val handles = mutableListOf<ContestHandle>()
-
-                for(i in 0 until statusJsonArray.length()) {
-                    val statusJsonObject = statusJsonArray.getJSONObject(i)
-                    val contestHandle = ContestHandle(
-                        statusJsonObject.getJSONObject("party").getJSONArray("members").getJSONObject(0).getString("handle"),
-                        statusJsonObject.getInt("rank"),
-                        statusJsonObject.getDouble("points"),
-                        statusJsonObject.getInt("penalty"),
-                        problemSolved(statusJsonObject.getJSONArray("problemResults")))
-
-                    handles.add(contestHandle)
-                }
-
-                listener.standingsCallback(handles)
-            }
+            handle.calcProblemsSolved()
+            handles.add(handle)
         }
+
+        listener.userInfoCallback(handles)
+    }
+
+    private fun parseUserStatus(json: String): List<Problem> {
+        val response = JSONObject(json)
+
+        val problemsJsonArray = response.getJSONArray("result")
+        val problems = mutableListOf<Problem>()
+        for(i in 0 until problemsJsonArray.length()) {
+            val jsonObject = problemsJsonArray.getJSONObject(i)
+            val problemJsonObject = jsonObject.getJSONObject("problem")
+
+            val problem = Problem(
+                problemJsonObject.getInt("contestId"),
+                problemJsonObject.getString("index"),
+                problemJsonObject.getString("name"),
+                getTags(problemJsonObject.getJSONArray("tags")),
+                jsonObject.getString("verdict"),
+                jsonObject.getString("programmingLanguage"),
+                jsonObject.getLong("creationTimeSeconds"))
+
+            problems.add(problem)
+        }
+
+        return problems
+    }
+
+    fun parseContests(json: String) {
+        val response = JSONObject(json)
+
+        val contestJsonArray = response.getJSONArray("result")
+        val contests = mutableListOf<Contest>()
+
+        for(i in 0 until contestJsonArray.length()) {
+            val contestJsonObject = contestJsonArray.getJSONObject(i)
+            val contest = Contest(
+                contestJsonObject.getInt("id"),
+                contestJsonObject.getString("name"),
+                contestJsonObject.getLong("startTimeSeconds"),
+                contestJsonObject.getInt("durationSeconds")/60)
+
+            contests.add(contest)
+        }
+
+        listener.contestsCallback(contests)
+    }
+
+    fun parseStandings(json: String) {
+        val response = JSONObject(json)
+
+        val statusJsonArray = response.getJSONObject("result").getJSONArray("rows")
+        val handles = mutableListOf<ContestHandle>()
+
+        for(i in 0 until statusJsonArray.length()) {
+            val statusJsonObject = statusJsonArray.getJSONObject(i)
+            val contestHandle = ContestHandle(
+                statusJsonObject.getJSONObject("party").getJSONArray("members").getJSONObject(0).getString("handle"),
+                statusJsonObject.getInt("rank"),
+                statusJsonObject.getDouble("points"),
+                statusJsonObject.getInt("penalty"),
+                problemSolved(statusJsonObject.getJSONArray("problemResults")))
+
+            handles.add(contestHandle)
+        }
+
+        listener.standingsCallback(handles)
     }
 
     private fun problemSolved(array: JSONArray): Int {

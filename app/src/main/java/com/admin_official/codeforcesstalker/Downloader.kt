@@ -1,8 +1,7 @@
 package com.admin_official.codeforcesstalker
 
 import android.util.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.admin_official.codeforcesstalker.data.Username
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.lang.StringBuilder
@@ -23,24 +22,15 @@ enum class DownloadStatus {
     OK, FAILED
 }
 
-interface DownloadListener {
-    fun onDownloadComplete(string: String, status: DownloadStatus, type: DownloadType)
-}
-
 private const val TAG = "De_Downloader"
 
-class Downloader(private val listener: DownloadListener) {
+class Downloader {
 
-    var downloadStatus = DownloadStatus.OK
+    var status = DownloadStatus.OK
 
-    fun execute(type: DownloadType, handles: List<String>?, contestId: Int?) {
-        GlobalScope.launch {
-            download(type, handles, contestId)
-        }
-    }
+    fun download(type: DownloadType, handles: List<Username>?, contestId: Int?): String {
 
-    fun download(type: DownloadType, handles: List<String>?, contestId: Int?) {
-        downloadStatus = DownloadStatus.OK
+        status = DownloadStatus.OK
 
         if(type != DownloadType.CONTESTS && handles == null) {
             throw IllegalArgumentException("Handles not provided to download query $type")
@@ -74,24 +64,26 @@ class Downloader(private val listener: DownloadListener) {
                 }
 
                 DownloadType.USER_STATUS -> {
-                    val url = String.format(URLS.USER_STATUS, handles!![0])
+                    val url = String.format(URLS.USER_STATUS, handles!![0].name)
                     URL(url).readText()
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.d(TAG, "download: Error downloading: error message -> ${e.message}")
-            downloadStatus = DownloadStatus.FAILED
-            "download: Error downloading: error message -> ${e.message}"
+            Log.d(TAG, "download: Error downloading: error message -> ${e.message}" +
+                    "\nDownload type -> $type" +
+                    "\nHandles -> $handles")
+            status = DownloadStatus.FAILED
+            "Error downloading: error message -> ${e.message}"
         }
 
-        listener.onDownloadComplete(ret, downloadStatus, type)
+        return ret
     }
 
-    private fun appendHandles(handles: List<String>): String {
+    private fun appendHandles(handles: List<Username>): String {
         val sb = StringBuilder()
         for(str in handles) {
-            sb.append("$str;")
+            sb.append("${str.name};")
         }
         return sb.toString()
     }
