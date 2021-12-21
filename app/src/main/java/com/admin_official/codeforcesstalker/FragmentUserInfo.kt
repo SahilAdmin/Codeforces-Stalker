@@ -1,59 +1,58 @@
 package com.admin_official.codeforcesstalker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.admin_official.codeforcesstalker.databinding.FragmentUserInfoBinding
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentUserInfo.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val TAG = "De_FragmentUserInfo"
 class FragmentUserInfo : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var binding: FragmentUserInfoBinding
+    private val viewModel: AppViewModel by activityViewModels()
+    private val userInfoRVAdapter = UserInfoRecyclerViewAdapter(Collections.emptyList())
+    private lateinit var userInfoReView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        viewModel.usernames.observe(this, {
+            Log.d(TAG, "onCreate: $it")
+            viewModel.loadHandles(it)
+        })
+
+        viewModel.handles.observe(this, {
+            Log.d(TAG, "onCreate: it")
+            userInfoRVAdapter.setHandlesList(it)
+        })
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_info, container, false)
+        binding = FragmentUserInfoBinding.inflate(inflater, null, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = userInfoRVAdapter
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_userInfo.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentUserInfo().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = FragmentUserInfo()
     }
 }
