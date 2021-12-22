@@ -31,6 +31,7 @@ abstract class SwipeGesture(val context: Context) : ItemTouchHelper.SimpleCallba
     ) {
         RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             .addSwipeRightBackgroundColor(ContextCompat.getColor(context, R.color.deleteColor))
+            .addSwipeRightActionIcon(R.drawable.ic_round_delete_sweep_24)
             .create()
             .decorate()
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
