@@ -12,4 +12,5 @@
     <string name="contest_start">Start: </string>
     <string name="contest_duration">Duration: </string>
     <string name="contest_phase">Phase: </string>
+    <string name="addUserName">Enter Codeforces Handle: </string>
 </resources>

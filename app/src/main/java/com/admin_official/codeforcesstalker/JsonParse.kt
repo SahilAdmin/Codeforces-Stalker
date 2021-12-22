@@ -23,12 +23,12 @@ class JsonParse(val listener: ParseListener) {
         for(i in 0 until userJsonArray.length()) {
             val userJsonObject = userJsonArray.getJSONObject(i)
             val handle = Handle(
-                userJsonObject.getString("handle"),
-                userJsonObject.getInt("rating"),
-                userJsonObject.getInt("maxRating"),
-                userJsonObject.getString("rank"),
-                userJsonObject.getString("titlePhoto"),
-                userJsonObject.getString("maxRank")
+                username = userJsonObject.optString("handle"),
+                rating = userJsonObject.optInt("rating"),
+                maxRating = userJsonObject.optInt("maxRating"),
+                rank = userJsonObject.optString("rank", "not rated"),
+                dp = userJsonObject.optString("titlePhoto"),
+                maxRank = userJsonObject.optString("maxRank", "not rated")
             )
 
             Downloader().apply {

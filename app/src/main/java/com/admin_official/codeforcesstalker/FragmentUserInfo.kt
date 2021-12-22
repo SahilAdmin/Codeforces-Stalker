@@ -66,7 +66,7 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
         ItemTouchHelper(swipeGesture).attachToRecyclerView(binding.recyclerView)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.userinfo_menu, menu)
     }
 
@@ -77,7 +77,7 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     override fun onSwipeDelete(str: String) {
         Log.d(TAG, "onSwipeDelete: del: $str")

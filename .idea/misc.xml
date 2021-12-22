@@ -5,7 +5,10 @@
       <map>
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21197916666666666" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable-v24/outline_delete_24.xml" value="0.21614583333333334" />
+        <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/add_user_background.xml" value="0.26614583333333336" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/ic_launcher_background.xml" value="0.21614583333333334" />
+        <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/ic_round_arrow_back_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/ic_round_home_24.xml" value="0.26614583333333336" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/ic_undraw_the_search_s0xf.xml" value="0.21614583333333334" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/splash_icon.xml" value="0.21614583333333334" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/drawable/splash_icon2.xml" value="0.21614583333333334" />
@@ -15,7 +18,8 @@
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/contest_info.xml" value="0.264" />
-        <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/fragment_add_user.xml" value="0.25" />
+        <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/fragment_activity_main.xml" value="0.264" />
+        <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/fragment_add_user.xml" value="0.264" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/fragment_contests.xml" value="0.25" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/fragment_main.xml" value="0.2115036231884058" />
         <entry key="..\:/MyCourses/6.AndroidStudio/AndroidStudioProjects/CodeforcesStalker/app/src/main/res/layout/fragment_user_info.xml" value="0.264" />

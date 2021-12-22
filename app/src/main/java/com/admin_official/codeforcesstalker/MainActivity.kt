@@ -3,7 +3,9 @@ package com.admin_official.codeforcesstalker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -33,17 +35,16 @@ class MainActivity : AppCompatActivity(){
         })
 
         viewModel.handles.observe(this, {
-            if(it != null) {
-                handlesReady = true
-            }
+            handlesReady = true
         })
 
-        viewModel.loadContests()
-
         viewModel.contests.observe(this, {
-            if(it != null) {
-                contestsReady = true
-            }
+            contestsReady = true
+        })
+
+        viewModel.authenticate.observe(this, {
+            if(it) Toast.makeText(this, "Added user successfully!", Toast.LENGTH_LONG).show()
+            else Toast.makeText(this, "User not found!", Toast.LENGTH_LONG).show()
         })
 
         binding.root.viewTreeObserver.addOnPreDrawListener (
@@ -59,31 +60,17 @@ class MainActivity : AppCompatActivity(){
         setTheme(R.style.Theme_CodeforcesStalker)
 
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
 
-        val fragmentAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        val pager = binding.pager.apply {adapter = fragmentAdapter}
-        val tabs = binding.tabs
-
-        binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                pager.currentItem = tab!!.position
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-
-        pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                tabs.selectTab(tabs.getTabAt(position))
-            }
-        })
-
-        viewModel.addHandle("smahajan54842")
-        viewModel.addHandle("ashutosh.2805")
-        viewModel.addHandle("papapyjama")
-        viewModel.addHandle("mexomerf")
-        viewModel.addHandle("_Tian_")
+        viewModel.addHandle2("ashutosh.2805")
+        viewModel.addHandle2("papapyjama")
+        viewModel.addHandle2("mexomerf")
+        viewModel.addHandle2("_Tian_")
 //        viewModel.addHandle("Aaryan_01")
     }
+
+
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.userinfo_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }*/
 }

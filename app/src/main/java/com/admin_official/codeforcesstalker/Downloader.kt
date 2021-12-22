@@ -43,7 +43,7 @@ class Downloader {
         val ret = try {
             when (type) {
                 DownloadType.AUTHENTICATE -> {
-                    val url = String.format(URLS.USERINFO, handles!![0])
+                    val url = String.format(URLS.USERINFO, handles!![0].name)
                     URL(url).readText()
                 }
 

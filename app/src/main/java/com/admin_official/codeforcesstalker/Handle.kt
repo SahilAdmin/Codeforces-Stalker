@@ -8,11 +8,11 @@ fun timeStampUtil(timeStampInMillis: Long, pattern: String): String = SimpleDate
 class Handle (val username: String,
 //              val firstName: String,
 //              val lastName: String,
-              val rating: Int,
-              val maxRating: Int,
-              val rank: String,
-              val dp: String,
-              val maxRank: String) {
+              val rating: Int = 0,
+              val maxRating: Int = 0,
+              val rank: String = "Null",
+              val dp: String = "Null",
+              val maxRank: String = "Null") {
 
     var submissionsToday = 0
     var acceptedToday = 0;

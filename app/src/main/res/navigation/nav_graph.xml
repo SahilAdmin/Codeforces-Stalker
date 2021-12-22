@@ -3,20 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/fragmentUserInfo">
+    app:startDestination="@id/fragmentActivityMain3">
 
+    <fragment
+        android:id="@+id/fragmentActivityMain3"
+        android:name="com.admin_official.codeforcesstalker.FragmentActivityMain"
+        android:label="FragmentActivityMain" >
+        <action
+            android:id="@+id/action_homeFragment_to_addFragment"
+            app:destination="@id/fragmentAddUser"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentAddUser"
         android:name="com.admin_official.codeforcesstalker.FragmentAddUser"
         android:label="fragment_add_user"
-        tools:layout="@layout/fragment_add_user" />
-    <fragment
-        android:id="@+id/fragmentUserInfo"
-        android:name="com.admin_official.codeforcesstalker.FragmentUserInfo"
-        android:label="fragment_user_info"
-        tools:layout="@layout/fragment_user_info" >
+        tools:layout="@layout/fragment_add_user" >
         <action
-            android:id="@+id/action_fragmentUserInfo_to_fragmentAddUser"
-            app:destination="@id/fragmentAddUser" />
+            android:id="@+id/action_adduser_to_activitymain"
+            app:destination="@id/fragmentActivityMain3" />
     </fragment>
 </navigation>

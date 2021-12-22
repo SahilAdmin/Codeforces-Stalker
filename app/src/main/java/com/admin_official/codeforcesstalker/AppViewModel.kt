@@ -73,6 +73,18 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
 
     fun addHandle(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            Downloader().apply {
+                download(DownloadType.AUTHENTICATE, listOf(Username(username)), null)
+                if(status == DownloadStatus.OK) {
+                    pAuthenticate.postValue(true)
+                    usernameDao.addUsername(Username(username))
+                } else pAuthenticate.postValue(false)
+            }
+        }
+    }
+
+    fun addHandle2(username: String) {
+        viewModelScope.launch(Dispatchers.IO){
             usernameDao.addUsername(Username(username))
         }
     }
