@@ -24,8 +24,6 @@ class JsonParse(val listener: ParseListener) {
             val userJsonObject = userJsonArray.getJSONObject(i)
             val handle = Handle(
                 userJsonObject.getString("handle"),
-                userJsonObject.getString("firstName"),
-                userJsonObject.getString("lastName"),
                 userJsonObject.getInt("rating"),
                 userJsonObject.getInt("maxRating"),
                 userJsonObject.getString("rank"),
@@ -34,12 +32,16 @@ class JsonParse(val listener: ParseListener) {
             )
 
             Downloader().apply {
-                val problemsJson = download(DownloadType.USER_STATUS, listOf(Username(handle.username)), null)
-                if(status == DownloadStatus.OK) handle.problems = parseUserStatus(problemsJson)
+                var problemsJson = download(DownloadType.USER_STATUS, listOf(Username(handle.username)), null)
+                while(DownloadStatus.OK != status) {
+                    status = DownloadStatus.OK
+                    problemsJson = download(DownloadType.USER_STATUS, listOf(Username(handle.username)), null)
+                }
+                handle.problems = parseUserStatus(problemsJson)
+                handle.calcProblemsSolved()
+                handle.calcAcceptedToday()
+                handles.add(handle)
             }
-
-            handle.calcProblemsSolved()
-            handles.add(handle)
         }
 
         listener.userInfoCallback(handles)

@@ -22,14 +22,16 @@ class FragmentUserInfo : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.usernames.observe(this, {
+        /*viewModel.usernames.observe(this, {
             Log.d(TAG, "onCreate: $it")
             viewModel.loadHandles(it)
-        })
+        })*/
 
         viewModel.handles.observe(this, {
-            Log.d(TAG, "onCreate: it")
-            userInfoRVAdapter.setHandlesList(it)
+//            Log.d(TAG, "onCreate: $it")
+            if(it != null) {
+                userInfoRVAdapter.setHandlesList(it)
+            }
         })
     }
 
@@ -40,7 +42,6 @@ class FragmentUserInfo : Fragment() {
 
         // Inflate the layout for this fragment
         binding = FragmentUserInfoBinding.inflate(inflater, null, false)
-
         return binding.root
     }
 

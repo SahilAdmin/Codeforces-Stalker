@@ -7,4 +7,6 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="userInfo_maxRank">Max Rank: %s</string>
     <string name="userInfo_maxRating">Max Rating: %d</string>
+    <string name="userInfo_submissions">Submissions Today: %d"</string>
+    <string name="userInfo_accepted">Accepted Today: %d</string>
 </resources>

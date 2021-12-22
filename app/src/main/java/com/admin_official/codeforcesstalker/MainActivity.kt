@@ -3,6 +3,7 @@ package com.admin_official.codeforcesstalker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.admin_official.codeforcesstalker.databinding.ActivityMainBinding
@@ -14,10 +15,45 @@ class MainActivity : AppCompatActivity(){
 
     private val viewModel by viewModels<AppViewModel>()
     private lateinit var binding: ActivityMainBinding
+    private var handlesReady = false
+    private var contestsReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setTheme(R.style.splashScreenTheme2)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        viewModel.loadContests()
+        viewModel.usernames.observe(this, {
+            viewModel.loadHandles(it)
+        })
+
+        viewModel.handles.observe(this, {
+            if(it != null) {
+                handlesReady = true
+//                viewModel.loadContests()
+            }
+        })
+
+        viewModel.contests.observe(this, {
+            if(it != null) {
+                contestsReady = true
+            }
+        })
+
+        binding.root.viewTreeObserver.addOnPreDrawListener (
+            object: ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if(handlesReady) {
+                        binding.root.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else false
+                }
+            })
+
+        setTheme(R.style.Theme_CodeforcesStalker)
+
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
@@ -42,5 +78,7 @@ class MainActivity : AppCompatActivity(){
         viewModel.addHandle("smahajan54842")
         viewModel.addHandle("ashutosh.2805")
         viewModel.addHandle("papapyjama")
+        viewModel.addHandle("mexomerf")
+//        viewModel.addHandle("Aaryan_01")
     }
 }

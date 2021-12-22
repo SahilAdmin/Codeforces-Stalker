@@ -9,7 +9,7 @@ import java.net.URL
 
 object URLS {
     const val USERINFO = "https://codeforces.com/api/user.info?handles=%s"
-    const val USER_STATUS = "https://codeforces.com/api/user.status?handle=%s&from=1&count=10"
+    const val USER_STATUS = "https://codeforces.com/api/user.status?handle=%s&from=1&count=100"
     const val CONTESTS = "https://codeforces.com/api/contest.list"
     const val STANDINGS = "https://codeforces.com/api/contest.standings?contestId=%d&handles=%s"
 }
