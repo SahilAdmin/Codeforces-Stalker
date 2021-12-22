@@ -20,19 +20,21 @@ class Handle (val username: String,
 
     fun calcProblemsSolved() {
         for(problem in problems) {
-            if(timeStampUtil(problem.timeStamp*1000L, "dd") ==
-                timeStampUtil(System.currentTimeMillis(), "dd")) submissionsToday++
+            if(timeStampUtil(problem.timeStamp*1000L, "dd/MM/yyyy") ==
+                timeStampUtil(System.currentTimeMillis(), "dd/MM/yyyy")) {
+                    submissionsToday++
+            }
         }
     }
 
     fun calcAcceptedToday() {
         for(problem in problems) {
-            if(timeStampUtil(problem.timeStamp*1000L, "dd") ==
-                    timeStampUtil(System.currentTimeMillis(), "dd") && problem.verdict == "OK") acceptedToday++
+            if(timeStampUtil(problem.timeStamp*1000L, "dd/MM/yyyy") ==
+                    timeStampUtil(System.currentTimeMillis(), "dd/MM/yyyy") && problem.verdict == "OK") acceptedToday++
         }
     }
 
     override fun toString(): String {
-        return "\nHandle(rating=$rating, maxRating=$maxRating, rank='$rank', dp='$dp', maxRank='$maxRank', solvedToday=$submissionsToday, problems=$problems)"
+        return "\nHandle(username=$username, rating=$rating, maxRating=$maxRating, rank='$rank', dp='$dp', maxRank='$maxRank', solvedToday=$submissionsToday, problems=$problems)"
     }
 }

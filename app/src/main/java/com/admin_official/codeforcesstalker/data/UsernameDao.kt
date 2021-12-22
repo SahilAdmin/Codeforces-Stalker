@@ -1,5 +1,6 @@
 package com.admin_official.codeforcesstalker.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
@@ -8,12 +9,12 @@ interface UsernameDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addUsername(username: Username)
 
-    @Delete
-    fun deleteUsername(username: Username)
+    @Query("DELETE FROM user_name WHERE name = :str")
+    fun delUsername(str: String)
 
     @Query("SELECT * FROM user_name ORDER BY name ASC")
     fun query(): LiveData<List<Username>>
 
-    @Query("SELECT * FROM user_name WHERE name LIKE :str")
+    @Query("SELECT * FROM user_name WHERE name = :str")
     fun search(str: String): LiveData<List<Username>>
 }

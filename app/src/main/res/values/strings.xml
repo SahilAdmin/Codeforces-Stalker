@@ -9,4 +9,7 @@
     <string name="userInfo_maxRating">Max Rating: %d</string>
     <string name="userInfo_submissions">Submissions Today: %d"</string>
     <string name="userInfo_accepted">Accepted Today: %d</string>
+    <string name="contest_start">Start: </string>
+    <string name="contest_duration">Duration: </string>
+    <string name="contest_phase">Phase: </string>
 </resources>

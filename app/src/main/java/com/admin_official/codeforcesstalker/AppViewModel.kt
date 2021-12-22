@@ -77,6 +77,13 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
         }
     }
 
+    fun delHandle(username: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "delHandle: $username")
+            usernameDao.delUsername(username)
+        }
+    }
+
     override fun authenticateCallback(boolean: Boolean) {
         pAuthenticate.postValue(boolean)
     }

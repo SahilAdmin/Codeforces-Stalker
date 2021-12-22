@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver
 import androidx.activity.viewModels
+import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.admin_official.codeforcesstalker.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
     private var handlesReady = false
     private var contestsReady = false
+
+//    val navController = this.findNavController(R.id.nav_host_fragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +35,10 @@ class MainActivity : AppCompatActivity(){
         viewModel.handles.observe(this, {
             if(it != null) {
                 handlesReady = true
-//                viewModel.loadContests()
             }
         })
+
+        viewModel.loadContests()
 
         viewModel.contests.observe(this, {
             if(it != null) {
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity(){
         binding.root.viewTreeObserver.addOnPreDrawListener (
             object: ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    return if(handlesReady) {
+                    return if(handlesReady && contestsReady) {
                         binding.root.viewTreeObserver.removeOnPreDrawListener(this)
                         true
                     } else false
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity(){
         viewModel.addHandle("ashutosh.2805")
         viewModel.addHandle("papapyjama")
         viewModel.addHandle("mexomerf")
+        viewModel.addHandle("_Tian_")
 //        viewModel.addHandle("Aaryan_01")
     }
 }

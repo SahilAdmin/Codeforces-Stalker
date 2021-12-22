@@ -83,7 +83,8 @@ class JsonParse(val listener: ParseListener) {
                 contestJsonObject.getInt("id"),
                 contestJsonObject.getString("name"),
                 contestJsonObject.getLong("startTimeSeconds"),
-                contestJsonObject.getInt("durationSeconds")/60)
+                contestJsonObject.getInt("durationSeconds")/60,
+                contestJsonObject.getString("phase"))
 
             contests.add(contest)
         }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/fragmentUserInfo">
+
+    <fragment
+        android:id="@+id/fragmentAddUser"
+        android:name="com.admin_official.codeforcesstalker.FragmentAddUser"
+        android:label="fragment_add_user"
+        tools:layout="@layout/fragment_add_user" />
+    <fragment
+        android:id="@+id/fragmentUserInfo"
+        android:name="com.admin_official.codeforcesstalker.FragmentUserInfo"
+        android:label="fragment_user_info"
+        tools:layout="@layout/fragment_user_info" >
+        <action
+            android:id="@+id/action_fragmentUserInfo_to_fragmentAddUser"
+            app:destination="@id/fragmentAddUser" />
+    </fragment>
+</navigation>
