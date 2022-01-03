@@ -1,9 +1,12 @@
-package com.admin_official.codeforcesstalker
+package com.admin_official.codeforcesstalker.logic
 
 import com.admin_official.codeforcesstalker.data.Username
+import com.admin_official.codeforcesstalker.objects.Contest
+import com.admin_official.codeforcesstalker.objects.ContestHandle
+import com.admin_official.codeforcesstalker.objects.Handle
+import com.admin_official.codeforcesstalker.objects.Problem
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.IllegalArgumentException
 
 interface ParseListener {
     fun authenticateCallback(boolean: Boolean)
@@ -30,20 +33,8 @@ class JsonParse(val listener: ParseListener) {
                 dp = userJsonObject.optString("titlePhoto"),
                 maxRank = userJsonObject.optString("maxRank", "not rated")
             )
-
-            Downloader().apply {
-                var problemsJson = download(DownloadType.USER_STATUS, listOf(Username(handle.username)), null)
-                while(DownloadStatus.OK != status) {
-                    status = DownloadStatus.OK
-                    problemsJson = download(DownloadType.USER_STATUS, listOf(Username(handle.username)), null)
-                }
-                handle.problems = parseUserStatus(problemsJson)
-                handle.calcProblemsSolved()
-                handle.calcAcceptedToday()
-                handles.add(handle)
-            }
+            handles.add(handle)
         }
-
         listener.userInfoCallback(handles)
     }
 

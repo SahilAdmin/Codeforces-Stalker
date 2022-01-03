@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.admin_official.codeforcesstalker.databinding.ActivityMainBinding
+import com.admin_official.codeforcesstalker.logic.AppViewModel
 import com.google.android.material.tabs.TabLayout
 
 private const val TAG = "De_MainActivity"
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity(){
         binding.root.viewTreeObserver.addOnPreDrawListener (
             object: ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    return if(handlesReady && contestsReady) {
+                    return if(handlesReady) {
                         binding.root.viewTreeObserver.removeOnPreDrawListener(this)
                         true
                     } else false
@@ -63,8 +64,8 @@ class MainActivity : AppCompatActivity(){
 
         viewModel.addHandle2("ashutosh.2805")
         viewModel.addHandle2("papapyjama")
-        viewModel.addHandle2("mexomerf")
-        viewModel.addHandle2("_Tian_")
+//        viewModel.addHandle2("mexomerf")
+//        viewModel.addHandle2("_Tian_")
 //        viewModel.addHandle("Aaryan_01")
     }
 

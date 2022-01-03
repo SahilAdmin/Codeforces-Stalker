@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:padding="16dp"
     tools:context=".FragmentAddUser">
 
@@ -26,6 +27,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
+        android:focusable="auto"
         android:hint="@string/addUserName"
         android:inputType="textPersonName"
         android:textColor="@color/design_default_color_primary" />
@@ -38,6 +40,7 @@
         android:layout_marginTop="630dp"
         android:clickable="true"
         android:focusable="true"
+        android:foregroundGravity="top|fill"
         android:scaleType="center"
         android:src="@drawable/ic_round_arrow_back_24"
         app:backgroundTint="@color/design_default_color_primary"

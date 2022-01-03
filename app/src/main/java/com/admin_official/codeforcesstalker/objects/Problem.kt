@@ -1,4 +1,4 @@
-package com.admin_official.codeforcesstalker
+package com.admin_official.codeforcesstalker.objects
 
 class Problem(val contestId: Int,
               val index: String,

@@ -2,23 +2,29 @@ package com.admin_official.codeforcesstalker
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.*
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.admin_official.codeforcesstalker.adapters.SwipeGesture
+import com.admin_official.codeforcesstalker.adapters.UserInfoRecyclerViewAdapter
 import com.admin_official.codeforcesstalker.databinding.FragmentUserInfoBinding
+import com.admin_official.codeforcesstalker.logic.AppViewModel
+import com.admin_official.codeforcesstalker.objects.Handle
 import java.util.*
+
 
 private const val TAG = "De_FragmentUserInfo"
 class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
 
     lateinit var binding: FragmentUserInfoBinding
-//    lateinit var navigation: NavController
     private val viewModel: AppViewModel by activityViewModels()
     private val userInfoRVAdapter = UserInfoRecyclerViewAdapter(Collections.emptyList(), this)
 
@@ -26,9 +32,12 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
         super.onCreate(savedInstanceState)
 
         viewModel.handles.observe(this, {
-//            Log.d(TAG, "onCreate: $it")
             if(it != null) {
-                userInfoRVAdapter.setHandlesList(it)
+                val li = it.sortedWith { a: Handle, b: Handle -> -1*a.rating.compareTo(b.rating) }
+//                Log.d(TAG, "onCreate: $it")
+                userInfoRVAdapter.setHandlesList(li)
+            } else {
+                userInfoRVAdapter.setHandlesList(Collections.emptyList())
             }
         })
     }
@@ -80,8 +89,13 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
     }*/
 
     override fun onSwipeDelete(str: String) {
-        Log.d(TAG, "onSwipeDelete: del: $str")
+//        Log.d(TAG, "onSwipeDelete: del: $str")
         viewModel.delHandle("$str")
+    }
+
+    override fun onItemClicked(handle: Handle) {
+        findNavController().navigate(R.id.action_fragmentActivityMain3_to_fragmentUserDetail2, Bundle().apply { putParcelable(
+            HANDLE_CLICKED, handle) })
     }
 
     companion object {

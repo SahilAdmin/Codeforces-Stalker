@@ -1,9 +1,11 @@
-package com.admin_official.codeforcesstalker
+package com.admin_official.codeforcesstalker.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.admin_official.codeforcesstalker.databinding.ContestInfoBinding
+import com.admin_official.codeforcesstalker.objects.Contest
+import com.admin_official.codeforcesstalker.objects.timeStampUtil
 
 class ContestInfoViewHolder(private val binding: ContestInfoBinding): RecyclerView.ViewHolder(binding.root) {
     fun bind (contest: Contest) {

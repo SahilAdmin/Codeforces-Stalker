@@ -6,9 +6,9 @@ import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.admin_official.codeforcesstalker.adapters.ViewPagerAdapter
 import com.admin_official.codeforcesstalker.databinding.FragmentActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 
@@ -20,11 +20,11 @@ class FragmentActivityMain : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true) {
+        /*activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_adduser_to_activitymain)
             }
-        })
+        })*/
     }
 
     override fun onCreateView(
@@ -76,6 +76,6 @@ class FragmentActivityMain : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) = FragmentActivityMain()
+        fun newInstance() = FragmentActivityMain()
     }
 }

@@ -13,6 +13,9 @@
             android:id="@+id/action_homeFragment_to_addFragment"
             app:destination="@id/fragmentAddUser"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_fragmentActivityMain3_to_fragmentUserDetail2"
+            app:destination="@id/fragmentUserDetail" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddUser"
@@ -21,6 +24,14 @@
         tools:layout="@layout/fragment_add_user" >
         <action
             android:id="@+id/action_adduser_to_activitymain"
+            app:destination="@id/fragmentActivityMain3" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentUserDetail"
+        android:name="com.admin_official.codeforcesstalker.FragmentUserDetail"
+        android:label="FragmentUserDetail" >
+        <action
+            android:id="@+id/action_fragmentUserDetail_to_fragmentActivityMain3"
             app:destination="@id/fragmentActivityMain3" />
     </fragment>
 </navigation>

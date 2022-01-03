@@ -1,10 +1,13 @@
-package com.admin_official.codeforcesstalker
+package com.admin_official.codeforcesstalker.objects
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun timeStampUtil(timeStampInMillis: Long, pattern: String): String = SimpleDateFormat(pattern).format(timeStampInMillis)
 
+@Parcelize
 class Handle (val username: String,
 //              val firstName: String,
 //              val lastName: String,
@@ -12,7 +15,7 @@ class Handle (val username: String,
               val maxRating: Int = 0,
               val rank: String = "Null",
               val dp: String = "Null",
-              val maxRank: String = "Null") {
+              val maxRank: String = "Null"): Parcelable {
 
     var submissionsToday = 0
     var acceptedToday = 0;

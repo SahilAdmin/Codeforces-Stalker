@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.admin_official.codeforcesstalker.adapters.ContestInfoRecyclerViewAdapter
 import com.admin_official.codeforcesstalker.databinding.FragmentContestsBinding
+import com.admin_official.codeforcesstalker.logic.AppViewModel
 import java.util.*
 
 class FragmentContests : Fragment() {
