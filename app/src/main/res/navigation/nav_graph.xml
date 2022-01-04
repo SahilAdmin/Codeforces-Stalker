@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_fragmentActivityMain3_to_fragmentUserDetail2"
             app:destination="@id/fragmentUserDetail" />
+        <action
+            android:id="@+id/action_fragmentActivityMain3_to_fragmentContestStatus"
+            app:destination="@id/fragmentContestStatus" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddUser"
@@ -32,6 +35,14 @@
         android:label="FragmentUserDetail" >
         <action
             android:id="@+id/action_fragmentUserDetail_to_fragmentActivityMain3"
+            app:destination="@id/fragmentActivityMain3" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentContestStatus"
+        android:name="com.admin_official.codeforcesstalker.FragmentContestStatus"
+        android:label="FragmentContestStatus" >
+        <action
+            android:id="@+id/action_fragmentContestStatus_to_fragmentActivityMain3"
             app:destination="@id/fragmentActivityMain3" />
     </fragment>
 </navigation>

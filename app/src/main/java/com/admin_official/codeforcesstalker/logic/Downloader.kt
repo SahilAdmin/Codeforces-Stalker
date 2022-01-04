@@ -92,7 +92,7 @@ class Downloader {
         status = DownloadStatus.OK
 
         val string = try {
-            val url = String.format(URLS.USER_STATUS, username, 20)
+            val url = String.format(URLS.USER_STATUS, username, count)
             URL(url).readText()
         } catch (e: Exception) {
             status = DownloadStatus.FAILED

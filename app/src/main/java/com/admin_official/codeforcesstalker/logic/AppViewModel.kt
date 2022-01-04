@@ -9,6 +9,7 @@ import com.admin_official.codeforcesstalker.data.UsernameDatabase
 import com.admin_official.codeforcesstalker.objects.Contest
 import com.admin_official.codeforcesstalker.objects.ContestHandle
 import com.admin_official.codeforcesstalker.objects.Handle
+import com.admin_official.codeforcesstalker.objects.Problem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -21,7 +22,7 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
     private var usernameDao = UsernameDatabase.getInstance(application).userDao()
 
     // Live Data------------------------------------------------------------------------------------
-    val usernames: LiveData<List<Username>>
+    val pUsernames: LiveData<List<Username>>
         get() = usernameDao.query()
 
     private var pHandles = MutableLiveData<List<Handle>>()
@@ -39,6 +40,12 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
     private var pStandings = MutableLiveData<List<ContestHandle>>()
     val standings: LiveData<List<ContestHandle>>
         get() = pStandings
+
+    private var pUserStatus = MutableLiveData<List<Problem>>()
+    val userStatus: LiveData<List<Problem>>
+        get() = pUserStatus
+
+    private var currUsers: List<Username> = Collections.emptyList()
 
     //----------------------------------------------------------------------------------------------
 
@@ -65,12 +72,17 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
         }
     }
 
-    fun loadStandings(handles: List<Username>, id: Int) {
+    fun loadStandings(id: Int, handles: List<Username>) {
 
         viewModelScope.launch(Dispatchers.IO) {
             Downloader().apply {
                 val standingsJson = standings(handles, id)
-                if(status == DownloadStatus.OK) JsonParse(this@AppViewModel).run {parseStandings(standingsJson)}
+                if (status == DownloadStatus.OK) JsonParse(this@AppViewModel).run {
+                    parseStandings(
+                        standingsJson
+                    )
+
+                }
             }
         }
     }
@@ -92,6 +104,17 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
         }
     }
 
+    fun loadStatus(username: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            Downloader().apply {
+                val statusJson = userStatus(username, 100)
+                if(status == DownloadStatus.OK) {
+                    JsonParse(this@AppViewModel).run {parseUserStatus(statusJson)}
+                }
+            }
+        }
+    }
+
     // helper function
     fun addHandle2(username: String) {
         viewModelScope.launch(Dispatchers.IO){
@@ -101,17 +124,20 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
 
     fun delHandle(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d(TAG, "delHandle: $username")
             usernameDao.delUsername(username)
         }
     }
+
+    fun nullContestStandings() {pStandings.value = null}
+
+    fun nullUserStatus() {pUserStatus.value = null}
 
     override fun authenticateCallback(boolean: Boolean) {
         pAuthenticate.postValue(boolean)
     }
 
-    override fun userInfoCallback(problems: List<Handle>) {
-        pHandles.postValue(problems)
+    override fun userInfoCallback(handles: List<Handle>) {
+        pHandles.postValue(handles)
     }
 
     override fun contestsCallback(contests: List<Contest>) {
@@ -120,5 +146,9 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
 
     override fun standingsCallback(handles: List<ContestHandle>) {
         pStandings.postValue(handles)
+    }
+
+    override fun userStatusCallback(problems: List<Problem>) {
+        pUserStatus.postValue(problems)
     }
 }

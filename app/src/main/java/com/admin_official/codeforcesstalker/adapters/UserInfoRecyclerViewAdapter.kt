@@ -43,7 +43,7 @@ abstract class SwipeGesture(val context: Context) : ItemTouchHelper.SimpleCallba
 
 class UserInfoViewHolder(val binding: UserInfoBinding): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(handle: Handle, listener: UserInfoRecyclerViewAdapter.RV_listener) {
+    fun bind(handle: Handle, listener: UserInfoRecyclerViewAdapter.RVListener) {
         binding.userInfoName.text = handle.username
         binding.userInfoRank.text = handle.rank
         binding.userInfoRating.text = handle.rating.toString()
@@ -60,9 +60,9 @@ class UserInfoViewHolder(val binding: UserInfoBinding): RecyclerView.ViewHolder(
 }
 
 private const val TAG = "UserInfo_RVAdapter"
-class UserInfoRecyclerViewAdapter(var handles: List<Handle>, val listener: RV_listener): RecyclerView.Adapter<UserInfoViewHolder>() {
+class UserInfoRecyclerViewAdapter(var handles: List<Handle>, val listener: RVListener): RecyclerView.Adapter<UserInfoViewHolder>() {
 
-    interface RV_listener {
+    interface RVListener {
         fun onSwipeDelete(str: String)
         fun onItemClicked(handle: Handle)
     }

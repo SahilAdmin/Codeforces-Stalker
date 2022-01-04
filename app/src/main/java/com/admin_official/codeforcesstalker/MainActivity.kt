@@ -2,16 +2,13 @@ package com.admin_official.codeforcesstalker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.navigation.findNavController
-import androidx.viewpager2.widget.ViewPager2
+import com.admin_official.codeforcesstalker.data.Username
 import com.admin_official.codeforcesstalker.databinding.ActivityMainBinding
 import com.admin_official.codeforcesstalker.logic.AppViewModel
-import com.google.android.material.tabs.TabLayout
+import java.util.*
 
 private const val TAG = "De_MainActivity"
 
@@ -31,7 +28,7 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         viewModel.loadContests()
-        viewModel.usernames.observe(this, {
+        viewModel.pUsernames.observe(this, {
             viewModel.loadHandles(it)
         })
 

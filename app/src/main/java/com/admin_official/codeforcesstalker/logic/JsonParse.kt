@@ -10,9 +10,10 @@ import org.json.JSONObject
 
 interface ParseListener {
     fun authenticateCallback(boolean: Boolean)
-    fun userInfoCallback(problems: List<Handle>)
+    fun userInfoCallback(handles: List<Handle>)
     fun contestsCallback(contests: List<Contest>)
     fun standingsCallback(handles: List<ContestHandle>)
+    fun userStatusCallback(problems: List<Problem>)
 }
 
 private const val TAG = "De_JsonParse"
@@ -38,7 +39,7 @@ class JsonParse(val listener: ParseListener) {
         listener.userInfoCallback(handles)
     }
 
-    private fun parseUserStatus(json: String): List<Problem> {
+    fun parseUserStatus(json: String) {
         val response = JSONObject(json)
 
         val problemsJsonArray = response.getJSONArray("result")
@@ -59,7 +60,7 @@ class JsonParse(val listener: ParseListener) {
             problems.add(problem)
         }
 
-        return problems
+        listener.userStatusCallback(problems)
     }
 
     fun parseContests(json: String) {

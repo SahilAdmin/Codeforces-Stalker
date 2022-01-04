@@ -1,7 +1,6 @@
 package com.admin_official.codeforcesstalker
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ import java.util.*
 
 
 private const val TAG = "De_FragmentUserInfo"
-class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
+class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RVListener {
 
     lateinit var binding: FragmentUserInfoBinding
     private val viewModel: AppViewModel by activityViewModels()
@@ -94,6 +93,7 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RV_listener {
     }
 
     override fun onItemClicked(handle: Handle) {
+        viewModel.loadStatus(handle.username)
         findNavController().navigate(R.id.action_fragmentActivityMain3_to_fragmentUserDetail2, Bundle().apply { putParcelable(
             HANDLE_CLICKED, handle) })
     }
