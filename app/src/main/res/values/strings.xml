@@ -13,4 +13,8 @@
     <string name="contest_duration">Duration: </string>
     <string name="contest_phase">Phase: </string>
     <string name="addUserName">Enter Codeforces Handle: </string>
+    <string name="contestStatusName">&lt;font color=\'#6200EE\'&gt;Name: &lt;/font&gt;%s</string>
+    <string name="contestStatusRank">Rank: %s</string>
+    <string name="contestStatusPenalty">Penalty: %s</string>
+    <string name="contestStatusProblems">Problems Solved: %s</string>
 </resources>

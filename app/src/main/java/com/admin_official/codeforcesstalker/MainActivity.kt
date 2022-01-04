@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity(){
 
         viewModel.addHandle2("ashutosh.2805")
         viewModel.addHandle2("papapyjama")
-//        viewModel.addHandle2("mexomerf")
-//        viewModel.addHandle2("_Tian_")
+        viewModel.addHandle2("mexomerf")
+        viewModel.addHandle2("_Tian_")
 //        viewModel.addHandle("Aaryan_01")
     }
 

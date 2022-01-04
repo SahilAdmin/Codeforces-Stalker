@@ -55,7 +55,8 @@ class JsonParse(val listener: ParseListener) {
                 getTags(problemJsonObject.getJSONArray("tags")),
                 jsonObject.getString("verdict"),
                 jsonObject.getString("programmingLanguage"),
-                jsonObject.getLong("creationTimeSeconds"))
+                jsonObject.getLong("creationTimeSeconds"),
+                problemJsonObject.optInt("rating", -1))
 
             problems.add(problem)
         }

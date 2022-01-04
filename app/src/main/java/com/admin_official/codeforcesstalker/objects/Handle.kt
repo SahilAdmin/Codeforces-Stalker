@@ -31,6 +31,10 @@ class Handle (val username: String,
     var problems: List<Problem> = Collections.emptyList()
     var todayProblems: List<Problem> = Collections.emptyList()
     var calculated = false
+    var ratingToday = arrayOf(0, 0, 0) // sum, count, avg
+    var rating10Days = arrayOf(0, 0, 0)
+    var ratingTotal = arrayOf(0, 0, 0)
+    var ratingMax = arrayOf(0, 0, 0) // today, 10 days, total
 
     fun calc() {
         if(calculated) return
@@ -44,14 +48,32 @@ class Handle (val username: String,
             val days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
             if(days <= 0) {
                 submissionsToday++
+                if(problem.rating != -1) {
+                    ratingToday[0]+=problem.rating
+                    ratingToday[1]++
+                    ratingMax[0] = Math.max(ratingMax[1], problem.rating)
+                }
                 if(problem.verdict == "OK") acceptedToday++
             }
             if(days <= 10) {
                 submissions10Days++
+                if(problem.rating != -1) {
+                    rating10Days[0]+=problem.rating
+                    rating10Days[1]++
+                    ratingMax[1] = Math.max(ratingMax[1], problem.rating)
+                }
                 if(problem.verdict == "OK") accepted10Days++
             }
             if(problem.verdict == "OK") accepted++
+            if(problem.rating != -1) {
+                ratingTotal[0]+=problem.rating
+                ratingTotal[1]++
+                ratingMax[2] = Math.max(ratingMax[2], problem.rating)
+            }
         }
+        ratingToday[2] = if(ratingToday[1] == 0) 0 else ratingToday[0]/ratingToday[1]
+        rating10Days[2] = if(rating10Days[1] == 0) 0 else rating10Days[0]/rating10Days[1]
+        ratingTotal[2] = if(ratingTotal[1] == 0) 0 else ratingTotal[0]/ratingTotal[1]
         calculated = true
     }
 

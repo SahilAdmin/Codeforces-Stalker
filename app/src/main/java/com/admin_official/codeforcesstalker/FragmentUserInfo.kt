@@ -57,7 +57,7 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RVListener {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = userInfoRVAdapter
 
-        val swipeGesture = object: SwipeGesture(activity as AppCompatActivity) {
+        val swipeGesture = object: SwipeGesture(requireContext()) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
@@ -69,27 +69,13 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RVListener {
             }
         }
 
-//        navigation = Navigation.findNavController(view)
-
         ItemTouchHelper(swipeGesture).attachToRecyclerView(binding.recyclerView)
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.userinfo_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_add -> {
-//                navigation.navigate(R.id.action_fragmentUserInfo_to_fragmentAddUser)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }*/
 
     override fun onSwipeDelete(str: String) {
 //        Log.d(TAG, "onSwipeDelete: del: $str")
-        viewModel.delHandle("$str")
+        viewModel.delHandle(str)
     }
 
     override fun onItemClicked(handle: Handle) {

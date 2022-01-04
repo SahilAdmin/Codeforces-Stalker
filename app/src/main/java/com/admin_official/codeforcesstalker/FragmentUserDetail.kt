@@ -67,24 +67,20 @@ class FragmentUserDetail : Fragment() {
         sb.append("Max Rating: ").append(handle.maxRating).append("\n\n")
         sb.append("Today: \n")
         sb.append("Submissions: ").append(handle.submissionsToday).append("\n")
-        sb.append("Accepted: ").append(handle.acceptedToday).append("\n\n")
+        sb.append("Accepted: ").append(handle.acceptedToday).append("\n")
+        sb.append("Max Rating: ").append(handle.ratingMax[0]).append("\n")
+        sb.append("Average Rating: ").append(handle.ratingToday[2]).append("\n\n")
         sb.append("Past Ten Days: \n")
         sb.append("Submissions: ").append(handle.submissions10Days).append("\n")
-        sb.append("Accepted: ").append(handle.accepted10Days).append("\n\n")
+        sb.append("Accepted: ").append(handle.accepted10Days).append("\n")
+        sb.append("Max Rating: ").append(handle.ratingMax[1]).append("\n")
+        sb.append("Average Rating: ").append(handle.rating10Days[2]).append("\n\n")
         sb.append("Last 100 submissions: ").append("\n")
         sb.append("Accepted: ").append(handle.accepted).append("\n")
+        sb.append("Max Rating: ").append(handle.ratingMax[2]).append("\n")
+        sb.append("Average Rating: ").append(handle.ratingTotal[2]).append("\n")
 
         binding.userDetailDescription.text = sb.toString()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d(TAG, "onDestroyView: hi")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy: in")
     }
 
     companion object {

@@ -19,12 +19,6 @@ class FragmentActivityMain : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        /*activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_adduser_to_activitymain)
-            }
-        })*/
     }
 
     override fun onCreateView(
@@ -60,7 +54,7 @@ class FragmentActivityMain : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        Log.d(TAG, "onCreateOptionsMenu: in")
+//        Log.d(TAG, "onCreateOptionsMenu: in")
         inflater.inflate(R.menu.userinfo_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
