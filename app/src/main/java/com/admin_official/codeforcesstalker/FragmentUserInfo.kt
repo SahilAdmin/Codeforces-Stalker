@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.*
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.admin_official.codeforcesstalker.adapters.UserInfoRecyclerViewAdapter
 import com.admin_official.codeforcesstalker.databinding.FragmentUserInfoBinding
 import com.admin_official.codeforcesstalker.logic.AppViewModel
 import com.admin_official.codeforcesstalker.objects.Handle
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 
@@ -75,13 +77,31 @@ class FragmentUserInfo : Fragment(), UserInfoRecyclerViewAdapter.RVListener {
 
     override fun onSwipeDelete(str: String) {
 //        Log.d(TAG, "onSwipeDelete: del: $str")
+//        showDelDiag(str)
         viewModel.delHandle(str)
+        showDelsnackB(str)
+    }
+
+    private fun showDelsnackB(str: String) {
+        Snackbar.make(binding.root, "Handle '$str' deleted", Snackbar.LENGTH_INDEFINITE).setAction("Undo") {
+            viewModel.addHandle(str)
+        }.show()
     }
 
     override fun onItemClicked(handle: Handle) {
         viewModel.loadStatus(handle.username)
         findNavController().navigate(R.id.action_fragmentActivityMain3_to_fragmentUserDetail2, Bundle().apply { putParcelable(
             HANDLE_CLICKED, handle) })
+    }
+
+    fun showDelDiag(str: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setTitle("Do you really want to delete handle $str")
+            setPositiveButton("OK") { _, _ -> viewModel.delHandle(str)}
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     companion object {
