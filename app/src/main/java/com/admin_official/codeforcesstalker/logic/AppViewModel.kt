@@ -17,7 +17,7 @@ import java.util.*
 
 private const val TAG = "De_AppViewModel"
 
-class AppViewModel(application: Application): ViewModel(), ParseListener {
+class AppViewModel(application: Application): AndroidViewModel(application), ParseListener {
 
     private var usernameDao = UsernameDatabase.getInstance(application).userDao()
 
