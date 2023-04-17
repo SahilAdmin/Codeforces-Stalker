@@ -22,7 +22,7 @@ class ContestInfoViewHolder(private val binding: ContestInfoBinding): RecyclerVi
 
 class ContestInfoRecyclerViewAdapter(var contests: List<Contest>, val listener: RVListener): RecyclerView.Adapter<ContestInfoViewHolder>() {
 
-    interface RVListener {
+    interface   RVListener {
         fun onItemClicked(contest: Contest)
     }
 

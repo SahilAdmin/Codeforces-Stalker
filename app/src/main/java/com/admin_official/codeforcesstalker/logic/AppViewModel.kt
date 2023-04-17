@@ -17,7 +17,7 @@ import java.util.*
 
 private const val TAG = "De_AppViewModel"
 
-class AppViewModel(application: Application): AndroidViewModel(application), ParseListener {
+class AppViewModel(application: Application): ViewModel(), ParseListener {
 
     private var usernameDao = UsernameDatabase.getInstance(application).userDao()
 
@@ -37,12 +37,12 @@ class AppViewModel(application: Application): AndroidViewModel(application), Par
     val contests: LiveData<List<Contest>>
         get() = pContests
 
-    private var pStandings = MutableLiveData<List<ContestHandle>>()
-    val standings: LiveData<List<ContestHandle>>
+    private var pStandings = MutableLiveData<List<ContestHandle>?>()
+    val standings: MutableLiveData<List<ContestHandle>?>
         get() = pStandings
 
-    private var pUserStatus = MutableLiveData<List<Problem>>()
-    val userStatus: LiveData<List<Problem>>
+    private var pUserStatus = MutableLiveData<List<Problem>?>()
+    val userStatus: MutableLiveData<List<Problem>?>
         get() = pUserStatus
 
     private var currUsers: List<Username> = Collections.emptyList()

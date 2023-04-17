@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity(){
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+//        viewModel.authenticate.value = false
+
         viewModel.loadContests()
         viewModel.pUsernames.observe(this, {
             viewModel.loadHandles(it)
@@ -59,10 +61,10 @@ class MainActivity : AppCompatActivity(){
 
         setContentView(binding.root)
 
-        viewModel.addHandle2("ashutosh.2805")
-        viewModel.addHandle2("papapyjama")
-        viewModel.addHandle2("mexomerf")
-        viewModel.addHandle2("_Tian_")
+//        viewModel.addHandle2("ashutosh.2805")
+//        viewModel.addHandle2("papapyjama")
+//        viewModel.addHandle2("mexomerf")
+//        viewModel.addHandle2("_Tian_")
 //        viewModel.addHandle("Aaryan_01")
     }
 
