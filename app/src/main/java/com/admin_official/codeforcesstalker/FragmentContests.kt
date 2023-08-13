@@ -27,21 +27,22 @@ class FragmentContests : Fragment(), ContestInfoRecyclerViewAdapter.RVListener{
         super.onCreate(savedInstanceState)
 
         adapter = ContestInfoRecyclerViewAdapter(Collections.emptyList(), this)
-        viewModel.pUsernames.observe(this, {
-            handles = it
-        })
-
-        viewModel.contests.observe(this, {
-            if(it != null) {
-                adapter.setContestsList(it)
-            }
-        })
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.pUsernames.observe(viewLifecycleOwner, {
+            handles = it
+        })
+
+        viewModel.contests.observe(viewLifecycleOwner, {
+            if(it != null) {
+                adapter.setContestsList(it)
+            }
+        })
+
         // Inflate the layout for this fragment
         binding = FragmentContestsBinding.inflate(inflater, null, false)
         return binding.root
@@ -55,6 +56,7 @@ class FragmentContests : Fragment(), ContestInfoRecyclerViewAdapter.RVListener{
     }
 
     companion object {
+
         @JvmStatic
         fun newInstance() = FragmentContests()
     }

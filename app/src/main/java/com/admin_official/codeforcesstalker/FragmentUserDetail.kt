@@ -43,7 +43,7 @@ class FragmentUserDetail : Fragment() {
             if(it != null) {
                 this.handle.problems = it
                 loadPage(this.handle)
-                viewModel.nullUserStatus()
+//                viewModel.nullUserStatus()
             }
         })
 

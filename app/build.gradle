@@ -6,7 +6,9 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
+
+    namespace 'com.admin_official.codeforcesstalker'
 
     defaultConfig {
         applicationId "com.admin_official.codeforcesstalker"
