@@ -33,15 +33,15 @@ class FragmentContests : Fragment(), ContestInfoRecyclerViewAdapter.RVListener{
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.pUsernames.observe(viewLifecycleOwner, {
+        viewModel.pUsernames.observe(viewLifecycleOwner) {
             handles = it
-        })
+        }
 
-        viewModel.contests.observe(viewLifecycleOwner, {
-            if(it != null) {
+        viewModel.contests.observe(viewLifecycleOwner) {
+            if (it != null) {
                 adapter.setContestsList(it)
             }
-        })
+        }
 
         // Inflate the layout for this fragment
         binding = FragmentContestsBinding.inflate(inflater, null, false)

@@ -1,9 +1,8 @@
 package com.admin_official.codeforcesstalker
 
+
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
@@ -17,21 +16,20 @@ class FragmentActivityMain : Fragment() {
 
     private lateinit var binding: FragmentActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
+    override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentActivityMainBinding.inflate(inflater, container, false)
-//        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+
         (activity as AppCompatActivity).setTheme(R.style.Theme_CodeforcesStalker)
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         setHasOptionsMenu(true)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val fragmentAdapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         val pager = binding.pager.apply {adapter = fragmentAdapter}
         val tabs = binding.tabs
@@ -49,8 +47,6 @@ class FragmentActivityMain : Fragment() {
                 tabs.selectTab(tabs.getTabAt(position))
             }
         })
-
-        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
